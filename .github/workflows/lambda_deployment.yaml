@@ -4,21 +4,20 @@ on:
   push:
     branches: [ master ]
 
-strategy:
-  matrix:
-    function:
-      - name: FunctionA
-        path: lambda-functions/user-create
-        arn: arn:aws:lambda:ap-south-1:202533533974:function:Test_Lambda_Function
-      - name: FunctionB
-        path: lambda-functions/user-delete
-        arn: arn:aws:lambda:ap-south-1:202533533974:function:Lambda_Function2
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(needs.set-matrix.outputs.matrix) }}
+      matrix:
+        function:
+          - name: FunctionA
+            path: lambda-functions/user-create
+            arn: arn:aws:lambda:ap-south-1:202533533974:function:Test_Lambda_Function
+          - name: FunctionB
+            path: lambda-functions/user-delete
+            arn: arn:aws:lambda:ap-south-1:202533533974:function:Lambda_Function2
+
+    
 
     steps:
       - uses: actions/checkout@v2
