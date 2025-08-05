@@ -10,10 +10,10 @@ jobs:
     strategy:
       matrix:
         function:
-          - name: FunctionA
+          - name: user-create
             path: lambda-functions/user-create
             arn: arn:aws:lambda:ap-south-1:202533533974:function:Test_Lambda_Function
-          - name: FunctionB
+          - name: user-delete
             path: lambda-functions/user-delete
             arn: arn:aws:lambda:ap-south-1:202533533974:function:Lambda_Function2
 
@@ -26,7 +26,7 @@ jobs:
       - name: Zip and Deploy Lambda
         run: |
           cd ${{ matrix.path }}
-          zip -r ../../${{ matrix.name }}.zip .
+          zip -r ${{ matrix.name }}.zip.
           cd ../..
           aws lambda update-function-code \
             --function-name ${{ matrix.arn }} \
